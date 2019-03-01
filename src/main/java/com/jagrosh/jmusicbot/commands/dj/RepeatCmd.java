@@ -30,7 +30,7 @@ public class RepeatCmd extends DJCommand
     {
         super(bot);
         this.name = "repeat";
-        this.help = "re-adds music to the queue when finished";
+        this.help = "キューが終了したときに、繰り返し再生します。";
         this.arguments = "[on|off]";
         this.guildOnly = true;
     }
@@ -55,11 +55,11 @@ public class RepeatCmd extends DJCommand
         }
         else
         {
-            event.replyError("Valid options are `on` or `off` (or leave empty to toggle)");
+            event.replyError("`on` または `off` が指定できます (何も指定しない場合は切り替えます。)");
             return;
         }
         settings.setRepeatMode(value);
-        event.replySuccess("Repeat mode is now `"+(value ? "ON" : "OFF")+"`");
+        event.replySuccess("リピートは `"+(value ? "ON" : "OFF")+"` になっています。");
     }
 
     @Override

@@ -34,7 +34,7 @@ public class AutoplaylistCmd extends OwnerCommand
         this.guildOnly = true;
         this.name = "autoplaylist";
         this.arguments = "<name|NONE>";
-        this.help = "sets the default playlist for the server";
+        this.help = "サーバーの既定のプレイリストを指定します。";
     }
 
     @Override
@@ -42,14 +42,14 @@ public class AutoplaylistCmd extends OwnerCommand
     {
         if(event.getArgs().isEmpty())
         {
-            event.reply(event.getClient().getError()+" Please include a playlist name or NONE");
+            event.reply(event.getClient().getError()+" プレイリストの名前 または `NONE` を指定してください。");
             return;
         }
         if(event.getArgs().equalsIgnoreCase("none"))
         {
             Settings settings = event.getClient().getSettingsFor(event.getGuild());
             settings.setDefaultPlaylist(null);
-            event.reply(event.getClient().getSuccess()+" Cleared the default playlist for **"+event.getGuild().getName()+"**");
+            event.reply(event.getClient().getSuccess()+" **"+event.getGuild().getName()+"** の既定プレイリストをまっさらにしました。");
             return;
         }
         String pname = event.getArgs().replaceAll("\\s+", "_");

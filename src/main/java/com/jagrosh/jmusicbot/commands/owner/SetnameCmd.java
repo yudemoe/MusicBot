@@ -29,7 +29,7 @@ public class SetnameCmd extends OwnerCommand
     public SetnameCmd()
     {
         this.name = "setname";
-        this.help = "sets the name of the bot";
+        this.help = "ボットの名前を変更します。";
         this.arguments = "<name>";
         this.guildOnly = false;
     }
@@ -41,15 +41,15 @@ public class SetnameCmd extends OwnerCommand
         {
             String oldname = event.getSelfUser().getName();
             event.getSelfUser().getManager().setName(event.getArgs()).complete(false);
-            event.reply(event.getClient().getSuccess()+" Name changed from `"+oldname+"` to `"+event.getArgs()+"`");
+            event.reply(event.getClient().getSuccess()+" ボットの名前を `"+oldname+"` から `"+event.getArgs()+"` へ変更しました。");
         } 
         catch(RateLimitedException e) 
         {
-            event.reply(event.getClient().getError()+" Name can only be changed twice per hour!");
+            event.reply(event.getClient().getError()+" 名前は1時間につき2回まで変更できます。（これはDiscord側の規定によるものです。）");
         }
         catch(Exception e) 
         {
-            event.reply(event.getClient().getError()+" That name is not valid!");
+            event.reply(event.getClient().getError()+" その名前は無効です。");
         }
     }
 }

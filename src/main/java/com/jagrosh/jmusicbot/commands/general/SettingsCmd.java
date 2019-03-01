@@ -35,7 +35,7 @@ public class SettingsCmd extends Command
     public SettingsCmd()
     {
         this.name = "settings";
-        this.help = "shows the bots settings";
+        this.help = "ボットの設定を表示します。";
         this.aliases = new String[]{"status"};
         this.guildOnly = true;
     }
@@ -53,15 +53,15 @@ public class SettingsCmd extends Command
         Role role = s.getRole(event.getGuild());
         EmbedBuilder ebuilder = new EmbedBuilder()
                 .setColor(event.getSelfMember().getColor())
-                .setDescription("Text Channel: "+(tchan==null ? "Any" : "**#"+tchan.getName()+"**")
-                        + "\nVoice Channel: "+(vchan==null ? "Any" : "**"+vchan.getName()+"**")
-                        + "\nDJ Role: "+(role==null ? "None" : "**"+role.getName()+"**")
-                        + "\nRepeat Mode: **"+(s.getRepeatMode() ? "On" : "Off")+"**"
-                        + "\nDefault Playlist: "+(s.getDefaultPlaylist()==null ? "None" : "**"+s.getDefaultPlaylist()+"**")
+                .setDescription("テキストチャンネル: "+(tchan==null ? "どこでも" : "**#"+tchan.getName()+"**")
+                        + "\nボイスチャンネル: "+(vchan==null ? "どこでも" : "**"+vchan.getName()+"**")
+                        + "\nDJ の役職: "+(role==null ? "None" : "**"+role.getName()+"**")
+                        + "\nリピート: **"+(s.getRepeatMode() ? "On" : "Off")+"**"
+                        + "\n既定のプレイリスト: "+(s.getDefaultPlaylist()==null ? "なし" : "**"+s.getDefaultPlaylist()+"**")
                         )
-                .setFooter(event.getJDA().getGuilds().size()+" servers | "
+                .setFooter(event.getJDA().getGuilds().size()+"個のサーバーで稼働中 | "
                         +event.getJDA().getGuilds().stream().filter(g -> g.getSelfMember().getVoiceState().inVoiceChannel()).count()
-                        +" audio connections", null);
+                        +"のボイスチャンネルに接続中", null);
         event.getChannel().sendMessage(builder.setEmbed(ebuilder.build()).build()).queue();
     }
     

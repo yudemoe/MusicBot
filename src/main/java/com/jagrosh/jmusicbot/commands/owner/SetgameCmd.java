@@ -28,7 +28,7 @@ public class SetgameCmd extends OwnerCommand
     public SetgameCmd()
     {
         this.name = "setgame";
-        this.help = "sets the game the bot is playing";
+        this.help = "ボットのステータス表示を変更します。";
         this.arguments = "[action] [game]";
         this.guildOnly = false;
         this.children = new OwnerCommand[]{
@@ -46,11 +46,11 @@ public class SetgameCmd extends OwnerCommand
         {
             event.getJDA().getPresence().setGame(title.isEmpty() ? null : Game.playing(title));
             event.reply(event.getClient().getSuccess()+" **"+event.getSelfUser().getName()
-                    +"** is "+(title.isEmpty() ? "no longer playing anything." : "now playing `"+title+"`"));
+                    +"** is "+(title.isEmpty() ? "何もプレイしていません。" : "now playing `"+title+"`"));
         }
         catch(Exception e)
         {
-            event.reply(event.getClient().getError()+" The game could not be set!");
+            event.reply(event.getClient().getError()+" 設定できませんでした。");
         }
     }
     

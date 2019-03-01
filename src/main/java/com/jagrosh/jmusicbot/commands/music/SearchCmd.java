@@ -48,7 +48,7 @@ public class SearchCmd extends MusicCommand
         this.name = "search";
         this.aliases = new String[]{"ytsearch"};
         this.arguments = "<query>";
-        this.help = "searches Youtube for a provided query";
+        this.help = "YouTube から曲を検索します。";
         this.beListening = true;
         this.bePlaying = false;
         this.botPermissions = new Permission[]{Permission.MESSAGE_EMBED_LINKS};
@@ -64,10 +64,10 @@ public class SearchCmd extends MusicCommand
     {
         if(event.getArgs().isEmpty())
         {
-            event.replyError("Please include a query.");
+            event.replyError("キーワードを指定してください。");
             return;
         }
-        event.reply(searchingEmoji+" Searching... `["+event.getArgs()+"]`", 
+        event.reply(searchingEmoji+" 検索しています... `["+event.getArgs()+"]`", 
                 m -> bot.getPlayerManager().loadItemOrdered(event.getGuild(), searchPrefix + event.getArgs(), new ResultHandler(m,event)));
     }
     
@@ -87,15 +87,15 @@ public class SearchCmd extends MusicCommand
         {
             if(bot.getConfig().isTooLong(track))
             {
-                m.editMessage(FormatUtil.filter(event.getClient().getWarning()+" This track (**"+track.getInfo().title+"**) is longer than the allowed maximum: `"
+                m.editMessage(FormatUtil.filter(event.getClient().getWarning()+" この曲 (**"+track.getInfo().title+"**) は長すぎます: `"
                         +FormatUtil.formatTime(track.getDuration())+"` > `"+bot.getConfig().getMaxTime()+"`")).queue();
                 return;
             }
             AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
             int pos = handler.addTrack(new QueuedTrack(track, event.getAuthor()))+1;
-            m.editMessage(FormatUtil.filter(event.getClient().getSuccess()+" Added **"+track.getInfo().title
-                    +"** (`"+FormatUtil.formatTime(track.getDuration())+"`) "+(pos==0 ? "to begin playing" 
-                        : " to the queue at position "+pos))).queue();
+            m.editMessage(FormatUtil.filter(event.getClient().getSuccess()+" **"+track.getInfo().title
+                    +"** (`"+FormatUtil.formatTime(track.getDuration())+"`) "+(pos==0 ? "をキューに追加しました。" 
+                        : " 位置: "+pos))).queue();
         }
 
         @Override
@@ -109,15 +109,15 @@ public class SearchCmd extends MusicCommand
                         AudioTrack track = playlist.getTracks().get(i-1);
                         if(bot.getConfig().isTooLong(track))
                         {
-                            event.replyWarning("This track (**"+track.getInfo().title+"**) is longer than the allowed maximum: `"
+                            event.replyWarning("この曲 (**"+track.getInfo().title+"**) は長すぎます: `"
                                     +FormatUtil.formatTime(track.getDuration())+"` > `"+bot.getConfig().getMaxTime()+"`");
                             return;
                         }
                         AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
                         int pos = handler.addTrack(new QueuedTrack(track, event.getAuthor()))+1;
                         event.replySuccess("Added **"+track.getInfo().title
-                                +"** (`"+FormatUtil.formatTime(track.getDuration())+"`) "+(pos==0 ? "to begin playing" 
-                                    : " to the queue at position "+pos));
+                                +"** (`"+FormatUtil.formatTime(track.getDuration())+"`) "+(pos==0 ? "をキューに追加しました。" 
+                                    : " 位置: "+pos));
                     })
                     .setCancel((msg) -> {})
                     .setUsers(event.getAuthor())
@@ -133,16 +133,16 @@ public class SearchCmd extends MusicCommand
         @Override
         public void noMatches() 
         {
-            m.editMessage(FormatUtil.filter(event.getClient().getWarning()+" No results found for `"+event.getArgs()+"`.")).queue();
+            m.editMessage(FormatUtil.filter(event.getClient().getWarning()+" `"+event.getArgs()+"` というキーワードでは、何も見つかりませんでした。")).queue();
         }
 
         @Override
         public void loadFailed(FriendlyException throwable) 
         {
             if(throwable.severity==Severity.COMMON)
-                m.editMessage(event.getClient().getError()+" Error loading: "+throwable.getMessage()).queue();
+                m.editMessage(event.getClient().getError()+" 曲を読み込めませんでした: "+throwable.getMessage()).queue();
             else
-                m.editMessage(event.getClient().getError()+" Error loading track.").queue();
+                m.editMessage(event.getClient().getError()+" 曲を読み込めませんでした。").queue();
         }
     }
 }

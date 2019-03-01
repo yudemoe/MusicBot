@@ -31,7 +31,7 @@ public class SetavatarCmd extends OwnerCommand
     public SetavatarCmd()
     {
         this.name = "setavatar";
-        this.help = "sets the avatar of the bot";
+        this.help = "ボットのプロフィール画像を変更します。";
         this.arguments = "<url>";
         this.guildOnly = false;
     }
@@ -50,16 +50,16 @@ public class SetavatarCmd extends OwnerCommand
         InputStream s = OtherUtil.imageFromUrl(url);
         if(s==null)
         {
-            event.reply(event.getClient().getError()+" Invalid or missing URL");
+            event.reply(event.getClient().getError()+" 無効なURLです。");
         }
         else
         {
             try {
             event.getSelfUser().getManager().setAvatar(Icon.from(s)).queue(
-                    v -> event.reply(event.getClient().getSuccess()+" Successfully changed avatar."), 
-                    t -> event.reply(event.getClient().getError()+" Failed to set avatar."));
+                    v -> event.reply(event.getClient().getSuccess()+" プロフィール画像を変更しました。"), 
+                    t -> event.reply(event.getClient().getError()+" プロフィール画像を変更できませんでした。"));
             } catch(IOException e) {
-                event.reply(event.getClient().getError()+" Could not load from provided URL.");
+                event.reply(event.getClient().getError()+" 指定されたURLから画像ファイルを読み込めませんでした。");
             }
         }
     }

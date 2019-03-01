@@ -41,7 +41,7 @@ public class PlaynextCmd extends DJCommand
         this.loadingEmoji = loadingEmoji;
         this.name = "playnext";
         this.arguments = "<title|URL>";
-        this.help = "plays a single song next";
+        this.help = "指定された曲を次に流します。";
         this.beListening = true;
         this.bePlaying = false;
     }
@@ -51,13 +51,13 @@ public class PlaynextCmd extends DJCommand
     {
         if(event.getArgs().isEmpty() && event.getMessage().getAttachments().isEmpty())
         {
-            event.replyWarning("Please include a song title or URL!");
+            event.replyWarning("曲名またはURLを指定してください。");
             return;
         }
         String args = event.getArgs().startsWith("<") && event.getArgs().endsWith(">") 
                 ? event.getArgs().substring(1,event.getArgs().length()-1) 
                 : event.getArgs().isEmpty() ? event.getMessage().getAttachments().get(0).getUrl() : event.getArgs();
-        event.reply(loadingEmoji+" Loading... `["+args+"]`", m -> bot.getPlayerManager().loadItemOrdered(event.getGuild(), args, new ResultHandler(m,event,false)));
+        event.reply(loadingEmoji+" 読み込み中... `["+args+"]`", m -> bot.getPlayerManager().loadItemOrdered(event.getGuild(), args, new ResultHandler(m,event,false)));
     }
     
     private class ResultHandler implements AudioLoadResultHandler
@@ -120,9 +120,9 @@ public class PlaynextCmd extends DJCommand
         public void loadFailed(FriendlyException throwable)
         {
             if(throwable.severity==FriendlyException.Severity.COMMON)
-                m.editMessage(event.getClient().getError()+" Error loading: "+throwable.getMessage()).queue();
+                m.editMessage(event.getClient().getError()+" 読み込みに失敗しました: "+throwable.getMessage()).queue();
             else
-                m.editMessage(event.getClient().getError()+" Error loading track.").queue();
+                m.editMessage(event.getClient().getError()+" 読み込みに失敗しました。").queue();
         }
     }
 }

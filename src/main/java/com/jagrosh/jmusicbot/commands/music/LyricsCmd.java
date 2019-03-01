@@ -38,7 +38,7 @@ public class LyricsCmd extends MusicCommand
         super(bot);
         this.name = "lyrics";
         this.arguments = "[song name]";
-        this.help = "shows the lyrics to the currently-playing song";
+        this.help = "再生中の曲の歌詞を表示します。";
         this.botPermissions = new Permission[]{Permission.MESSAGE_EMBED_LINKS};
         this.bePlaying = true;
     }
@@ -56,7 +56,7 @@ public class LyricsCmd extends MusicCommand
         {
             if(lyrics == null)
             {
-                event.replyError("Lyrics for `" + title + "` could not be found!");
+                event.replyError("`" + title + "` の歌詞データは見つかりませんでした。");
                 return;
             }
 
@@ -66,7 +66,7 @@ public class LyricsCmd extends MusicCommand
                     .setTitle(lyrics.getTitle(), lyrics.getURL());
             if(lyrics.getContent().length()>15000)
             {
-                event.replyWarning("Lyrics for `" + title + "` found but likely not correct: " + lyrics.getURL());
+                event.replyWarning("`" + title + "` の歌詞は見つかりましたが、正しくない可能性があります: " + lyrics.getURL());
             }
             else if(lyrics.getContent().length()>2000)
             {
