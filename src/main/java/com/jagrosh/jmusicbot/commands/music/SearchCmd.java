@@ -102,7 +102,7 @@ public class SearchCmd extends MusicCommand
         public void playlistLoaded(AudioPlaylist playlist)
         {
             builder.setColor(event.getSelfMember().getColor())
-                    .setText(FormatUtil.filter(event.getClient().getSuccess()+" Search results for `"+event.getArgs()+"`:"))
+                    .setText(FormatUtil.filter(event.getClient().getSuccess()+" `"+event.getArgs()+"` の検索結果:"))
                     .setChoices(new String[0])
                     .setSelection((msg,i) -> 
                     {
@@ -115,7 +115,7 @@ public class SearchCmd extends MusicCommand
                         }
                         AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
                         int pos = handler.addTrack(new QueuedTrack(track, event.getAuthor()))+1;
-                        event.replySuccess("Added **"+track.getInfo().title
+                        event.replySuccess("**"+track.getInfo().title
                                 +"** (`"+FormatUtil.formatTime(track.getDuration())+"`) "+(pos==0 ? "をキューに追加しました。" 
                                     : " 位置: "+pos));
                     })

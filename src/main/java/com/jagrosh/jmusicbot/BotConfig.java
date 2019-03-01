@@ -111,7 +111,7 @@ public class BotConfig
                         + "\nBot Token: ");
                 if(token==null)
                 {
-                    prompt.alert(Prompt.Level.WARNING, CONTEXT, "No token provided! Exiting.\n\nConfig Location: " + path.toAbsolutePath().toString());
+                    prompt.alert(Prompt.Level.WARNING, CONTEXT, "token が指定されていません！終了します...\n\nconfig ファイルの場所: " + path.toAbsolutePath().toString());
                     return;
                 }
                 else
