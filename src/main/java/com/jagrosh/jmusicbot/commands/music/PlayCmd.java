@@ -53,7 +53,7 @@ public class PlayCmd extends MusicCommand
         this.loadingEmoji = loadingEmoji;
         this.name = "play";
         this.arguments = "<title|URL|subcommand>";
-        this.help = "plays the provided song";
+        this.help = "指定された曲を再生します。";
         this.beListening = true;
         this.bePlaying = false;
         this.children = new Command[]{new PlaylistCmd(bot)};
@@ -75,17 +75,17 @@ public class PlayCmd extends MusicCommand
                 if(!isDJ && dj!=null)
                     isDJ = event.getMember().getRoles().contains(dj);
                 if(!isDJ)
-                    event.replyError("Only DJs can unpause the player!");
+                    event.replyError("DJのみがリジュームできます。");
                 else
                 {
                     handler.getPlayer().setPaused(false);
-                    event.replySuccess("Resumed **"+handler.getPlayer().getPlayingTrack().getInfo().title+"**.");
+                    event.replySuccess("**"+handler.getPlayer().getPlayingTrack().getInfo().title+"** をリジュームしました。");
                 }
                 return;
             }
-            StringBuilder builder = new StringBuilder(event.getClient().getWarning()+" Play Commands:\n");
-            builder.append("\n`").append(event.getClient().getPrefix()).append(name).append(" <song title>` - plays the first result from Youtube");
-            builder.append("\n`").append(event.getClient().getPrefix()).append(name).append(" <URL>` - plays the provided song, playlist, or stream");
+            StringBuilder builder = new StringBuilder(event.getClient().getWarning()+" play コマンド:\n");
+            builder.append("\n`").append(event.getClient().getPrefix()).append(name).append(" <song title>` - YouTube の検索結果トップの動画を再生します。");
+            builder.append("\n`").append(event.getClient().getPrefix()).append(name).append(" <URL>` - 指定されたURLを再生します。");
             for(Command cmd: children)
                 builder.append("\n`").append(event.getClient().getPrefix()).append(name).append(" ").append(cmd.getName()).append(" ").append(cmd.getArguments()).append("` - ").append(cmd.getHelp());
             event.reply(builder.toString());
@@ -94,7 +94,7 @@ public class PlayCmd extends MusicCommand
         String args = event.getArgs().startsWith("<") && event.getArgs().endsWith(">") 
                 ? event.getArgs().substring(1,event.getArgs().length()-1) 
                 : event.getArgs().isEmpty() ? event.getMessage().getAttachments().get(0).getUrl() : event.getArgs();
-        event.reply(loadingEmoji+" Loading... `["+args+"]`", m -> bot.getPlayerManager().loadItemOrdered(event.getGuild(), args, new ResultHandler(m,event,false)));
+        event.reply(loadingEmoji+" 読み込んでいます... `["+args+"]`", m -> bot.getPlayerManager().loadItemOrdered(event.getGuild(), args, new ResultHandler(m,event,false)));
     }
     
     private class ResultHandler implements AudioLoadResultHandler

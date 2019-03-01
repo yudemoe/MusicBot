@@ -32,7 +32,7 @@ public class SetdjCmd extends AdminCommand
     public SetdjCmd()
     {
         this.name = "setdj";
-        this.help = "sets the DJ role for certain music commands";
+        this.help = "DJ の役職を設定します。";
         this.arguments = "<rolename|NONE>";
     }
     
@@ -41,26 +41,26 @@ public class SetdjCmd extends AdminCommand
     {
         if(event.getArgs().isEmpty())
         {
-            event.reply(event.getClient().getError()+" Please include a role name or NONE");
+            event.reply(event.getClient().getError()+" 役職の名前 または NONE を指定してください。");
             return;
         }
         Settings s = event.getClient().getSettingsFor(event.getGuild());
         if(event.getArgs().equalsIgnoreCase("none"))
         {
             s.setDJRole(null);
-            event.reply(event.getClient().getSuccess()+" DJ role cleared; Only Admins can use the DJ commands.");
+            event.reply(event.getClient().getSuccess()+" DJの役職が追加されました。DJのみが操作できます。");
         }
         else
         {
             List<Role> list = FinderUtil.findRoles(event.getArgs(), event.getGuild());
             if(list.isEmpty())
-                event.reply(event.getClient().getWarning()+" No Roles found matching \""+event.getArgs()+"\"");
+                event.reply(event.getClient().getWarning()+" \""+event.getArgs()+"\"という役職は見つかりませんでした。");
             else if (list.size()>1)
                 event.reply(event.getClient().getWarning()+FormatUtil.listOfRoles(list, event.getArgs()));
             else
             {
                 s.setDJRole(list.get(0));
-                event.reply(event.getClient().getSuccess()+" DJ commands can now be used by users with the **"+list.get(0).getName()+"** role.");
+                event.reply(event.getClient().getSuccess()+" DJのコマンドは **"+list.get(0).getName()+"** のみが操作できます。");
             }
         }
     }

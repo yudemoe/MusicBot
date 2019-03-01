@@ -32,7 +32,7 @@ public class SettcCmd extends AdminCommand
     public SettcCmd()
     {
         this.name = "settc";
-        this.help = "sets the text channel for music commands";
+        this.help = "ボットを操作するためのテキストチャンネルを制限します。";
         this.arguments = "<channel|NONE>";
     }
     
@@ -41,26 +41,26 @@ public class SettcCmd extends AdminCommand
     {
         if(event.getArgs().isEmpty())
         {
-            event.reply(event.getClient().getError()+" Please include a text channel or NONE");
+            event.reply(event.getClient().getError()+" テキストチャンネルの名前 または NONE を指定してください。");
             return;
         }
         Settings s = event.getClient().getSettingsFor(event.getGuild());
         if(event.getArgs().equalsIgnoreCase("none"))
         {
             s.setTextChannel(null);
-            event.reply(event.getClient().getSuccess()+" Music commands can now be used in any channel");
+            event.reply(event.getClient().getSuccess()+" ボットの操作がどこでもできるようになりました。");
         }
         else
         {
             List<TextChannel> list = FinderUtil.findTextChannels(event.getArgs(), event.getGuild());
             if(list.isEmpty())
-                event.reply(event.getClient().getWarning()+" No Text Channels found matching \""+event.getArgs()+"\"");
+                event.reply(event.getClient().getWarning()+" \""+event.getArgs()+"\" というテキストチャンネルは見つかりませんでした。");
             else if (list.size()>1)
                 event.reply(event.getClient().getWarning()+FormatUtil.listOfTChannels(list, event.getArgs()));
             else
             {
                 s.setTextChannel(list.get(0));
-                event.reply(event.getClient().getSuccess()+" Music commands can now only be used in <#"+list.get(0).getId()+">");
+                event.reply(event.getClient().getSuccess()+" ボットのコマンドは <#"+list.get(0).getId()+"> でのみ使えるようになりました。");
             }
         }
     }

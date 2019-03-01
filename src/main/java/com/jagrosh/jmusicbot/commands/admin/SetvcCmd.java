@@ -32,7 +32,7 @@ public class SetvcCmd extends AdminCommand
     public SetvcCmd()
     {
         this.name = "setvc";
-        this.help = "sets the voice channel for playing music";
+        this.help = "ボットを動かすためのボイスチャンネルを制限します。";
         this.arguments = "<channel|NONE>";
     }
     
@@ -41,26 +41,26 @@ public class SetvcCmd extends AdminCommand
     {
         if(event.getArgs().isEmpty())
         {
-            event.reply(event.getClient().getError()+" Please include a voice channel or NONE");
+            event.reply(event.getClient().getError()+" ボイスチャンネルの名前 または NONE を指定してください。");
             return;
         }
         Settings s = event.getClient().getSettingsFor(event.getGuild());
         if(event.getArgs().equalsIgnoreCase("none"))
         {
             s.setVoiceChannel(null);
-            event.reply(event.getClient().getSuccess()+" Music can now be played in any channel");
+            event.reply(event.getClient().getSuccess()+" ボットがどこでも動かせるようになりました。");
         }
         else
         {
             List<VoiceChannel> list = FinderUtil.findVoiceChannels(event.getArgs(), event.getGuild());
             if(list.isEmpty())
-                event.reply(event.getClient().getWarning()+" No Voice Channels found matching \""+event.getArgs()+"\"");
+                event.reply(event.getClient().getWarning()+" \""+event.getArgs()+"\"というボイスチャンネルは見つかりませんでした。");
             else if (list.size()>1)
                 event.reply(event.getClient().getWarning()+FormatUtil.listOfVChannels(list, event.getArgs()));
             else
             {
                 s.setVoiceChannel(list.get(0));
-                event.reply(event.getClient().getSuccess()+" Music can now only be played in **"+list.get(0).getName()+"**");
+                event.reply(event.getClient().getSuccess()+" ボットは **"+list.get(0).getName()+"** でのみ動作するようになりました。");
             }
         }
     }
