@@ -160,13 +160,13 @@ public class JMusicBot
             } 
             catch(Exception e) 
             {
-                log.error("Could not start GUI. If you are "
-                        + "running on a server or in a location where you cannot display a "
-                        + "window, please run in nogui mode using the -Dnogui=true flag.");
+                log.error("GUI を起動できませんでした。"
+                        + "もしあなたが GUI を表示できるディスプレイをサーバー上で使っていない場合、"
+                        + "-Dnogui=true フラグを使用することによって、CLI にて起動できます。");
             }
         }
         
-        log.info("Loaded config from "+config.getConfigLocation());
+        log.info("設定ファイルを読み込みました： "+config.getConfigLocation());
         
         // attempt to log in and start
         try
@@ -190,7 +190,7 @@ public class JMusicBot
         }
         catch(IllegalArgumentException ex)
         {
-            log.error("Some aspect of the configuration is invalid: "+ex);
+            log.error("いくつかの項目において、設定ファイルに問題が見つかりました: "+ex);
             System.exit(1);
         }
     }

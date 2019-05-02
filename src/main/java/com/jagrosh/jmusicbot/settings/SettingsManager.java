@@ -49,7 +49,7 @@ public class SettingsManager implements GuildSettingsManager
                         o.has("repeat")          ? o.getBoolean("repeat")         : false));
             });
         } catch(IOException | JSONException e) {
-            LoggerFactory.getLogger("Settings").warn("Failed to load server settings (this is normal if no settings have been set yet): "+e);
+            LoggerFactory.getLogger("Settings").warn("ボットの設定ファイルを読み込めませんでした（もしこれが初回起動であるなら、それは普通のことです！）: "+e);
         }
     }
     
@@ -98,7 +98,7 @@ public class SettingsManager implements GuildSettingsManager
         try {
             Files.write(Paths.get("serversettings.json"), obj.toString(4).getBytes());
         } catch(IOException ex){
-            LoggerFactory.getLogger("Settings").warn("Failed to write to file: "+ex);
+            LoggerFactory.getLogger("Settings").warn("ファイルに書き込めませんでした: "+ex);
         }
     }
 }
