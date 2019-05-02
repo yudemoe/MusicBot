@@ -37,7 +37,7 @@ public class PlaylistCmd extends OwnerCommand
         this.guildOnly = false;
         this.name = "playlist";
         this.arguments = "<append|delete|make|setdefault>";
-        this.help = "playlist management";
+        this.help = "プレイリストを管理します。";
         this.children = new OwnerCommand[]{
             new ListCmd(),
             new AppendlistCmd(),
@@ -63,7 +63,7 @@ public class PlaylistCmd extends OwnerCommand
         {
             this.name = "make";
             this.aliases = new String[]{"create"};
-            this.help = "makes a new playlist";
+            this.help = "新しいプレイリストを作成します。";
             this.arguments = "<name>";
             this.guildOnly = false;
         }
@@ -95,7 +95,7 @@ public class PlaylistCmd extends OwnerCommand
         {
             this.name = "delete";
             this.aliases = new String[]{"remove"};
-            this.help = "deletes an existing playlist";
+            this.help = "プレイリストを削除します。";
             this.arguments = "<name>";
             this.guildOnly = false;
         }
@@ -127,7 +127,7 @@ public class PlaylistCmd extends OwnerCommand
         {
             this.name = "append";
             this.aliases = new String[]{"add"};
-            this.help = "appends songs to an existing playlist";
+            this.help = "プレイリストに曲を追加します。";
             this.arguments = "<name> <URL> | <URL> | ...";
             this.guildOnly = false;
         }
@@ -188,7 +188,7 @@ public class PlaylistCmd extends OwnerCommand
         {
             this.name = "all";
             this.aliases = new String[]{"available","list"};
-            this.help = "lists all available playlists";
+            this.help = "すべての有効なプレイリストを表示します。";
             this.guildOnly = true;
         }
 

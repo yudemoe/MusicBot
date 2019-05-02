@@ -60,7 +60,7 @@ public class SetgameCmd extends OwnerCommand
         {
             this.name = "stream";
             this.aliases = new String[]{"twitch","streaming"};
-            this.help = "sets the game the bot is playing to a stream";
+            this.help = "Bot のステータスを配信中にします。（本当に配信するわけではありません！）";
             this.arguments = "<username> <game>";
             this.guildOnly = false;
         }
@@ -93,7 +93,7 @@ public class SetgameCmd extends OwnerCommand
         {
             this.name = "listen";
             this.aliases = new String[]{"listening"};
-            this.help = "sets the game the bot is listening to";
+            this.help = "Bot のステータスを聴取中にします。";
             this.arguments = "<title>";
             this.guildOnly = false;
         }
@@ -103,7 +103,7 @@ public class SetgameCmd extends OwnerCommand
         {
             if(event.getArgs().isEmpty())
             {
-                event.replyError("Please include a title to listen to!");
+                event.replyError("タイトルを指定してください。");
                 return;
             }
             String title = event.getArgs().toLowerCase().startsWith("to") ? event.getArgs().substring(2).trim() : event.getArgs();
@@ -112,7 +112,7 @@ public class SetgameCmd extends OwnerCommand
                 event.getJDA().getPresence().setGame(Game.listening(title));
                 event.replySuccess("**"+event.getSelfUser().getName()+"** is now listening to `"+title+"`");
             } catch(Exception e) {
-                event.reply(event.getClient().getError()+" The game could not be set!");
+                event.reply(event.getClient().getError()+" そのゲームには指定できません。");
             }
         }
     }
