@@ -62,7 +62,7 @@ public class FormatUtil {
     
     public static String listOfTChannels(List<TextChannel> list, String query)
     {
-        String out = " Multiple text channels found matching \""+query+"\":";
+        String out = " 次のキーワードに一致するチャンネルが複数見つかりました： \""+query+"\":";
         for(int i=0; i<6 && i<list.size(); i++)
             out+="\n - "+list.get(i).getName()+" (<#"+list.get(i).getId()+">)";
         if(list.size()>6)
@@ -72,7 +72,7 @@ public class FormatUtil {
     
     public static String listOfVChannels(List<VoiceChannel> list, String query)
     {
-        String out = " Multiple voice channels found matching \""+query+"\":";
+        String out = " 次のキーワードに一致するチャンネルが複数見つかりました： \""+query+"\":";
         for(int i=0; i<6 && i<list.size(); i++)
             out+="\n - "+list.get(i).getName()+" (ID:"+list.get(i).getId()+")";
         if(list.size()>6)
@@ -82,7 +82,7 @@ public class FormatUtil {
     
     public static String listOfRoles(List<Role> list, String query)
     {
-        String out = " Multiple text channels found matching \""+query+"\":";
+        String out = " 次のキーワードに一致するチャンネルが複数見つかりました： \""+query+"\":";
         for(int i=0; i<6 && i<list.size(); i++)
             out+="\n - "+list.get(i).getName()+" (ID:"+list.get(i).getId()+")";
         if(list.size()>6)
