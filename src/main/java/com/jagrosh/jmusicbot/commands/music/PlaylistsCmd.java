@@ -56,7 +56,7 @@ public class PlaylistsCmd extends MusicCommand
         {
             StringBuilder builder = new StringBuilder(event.getClient().getSuccess()+" 有効なプレイリスト:\n");
             list.forEach(str -> builder.append("`").append(str).append("` "));
-            builder.append("\nType `").append(event.getClient().getTextualPrefix()).append("play playlist <name>` でプレイリストを再生できます。");
+            builder.append("`").append(event.getClient().getTextualPrefix()).append("play playlist <name>` でプレイリストを再生できます。");
             event.reply(builder.toString());
         }
     }

@@ -112,7 +112,7 @@ public class QueueCmd extends MusicCommand
                     .append(ah.getPlayer().getPlayingTrack().getInfo().title).append("**\n");
         }
         return FormatUtil.filter(sb.append(success).append(" 現在のキュー | ").append(songslength)
-                .append(" entries | `").append(FormatUtil.formatTime(total)).append("` ")
+                .append(" 個の項目 | `").append(FormatUtil.formatTime(total)).append("` ")
                 .append(repeatmode ? "| " + REPEAT : "").toString());
     }
 }

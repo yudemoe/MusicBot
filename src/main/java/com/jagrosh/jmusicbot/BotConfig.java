@@ -156,8 +156,8 @@ public class BotConfig
                 }
                 catch(IOException ex) 
                 {
-                    prompt.alert(Prompt.Level.WARNING, CONTEXT, "Failed to write new config options to config.txt: "+ex
-                        + "\nPlease make sure that the files are not on your desktop or some other restricted area.\n\nConfig Location: " 
+                    prompt.alert(Prompt.Level.WARNING, CONTEXT, "新しいオプションを config.txt に書き込めませんでした: "+ex
+                        + "\nファイルの場所がボットによって書き込める権限設定になっていることを確認してください。\n\nconfig.txt の場所: " 
                         + path.toAbsolutePath().toString());
                 }
             }
@@ -167,7 +167,7 @@ public class BotConfig
         }
         catch (ConfigException ex)
         {
-            prompt.alert(Prompt.Level.ERROR, CONTEXT, ex + ": " + ex.getMessage() + "\n\nConfig Location: " + path.toAbsolutePath().toString());
+            prompt.alert(Prompt.Level.ERROR, CONTEXT, ex + ": " + ex.getMessage() + "\n\nconfig.txt の場所: " + path.toAbsolutePath().toString());
         }
     }
     

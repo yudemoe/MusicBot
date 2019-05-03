@@ -35,7 +35,7 @@ import org.json.JSONTokener;
  */
 public class OtherUtil
 {
-    public final static String NEW_VERSION_AVAILABLE = "There is a new version of JMusicBot available!\n"
+    public final static String NEW_VERSION_AVAILABLE = "新しいバージョンが利用可能です。\n"
                     + "現在のバージョン: %s\n"
                     + "新しいバージョン: %s\n\n"
                     + "https://github.com/jagrosh/MusicBot/releases/latest から最新ビルドをダウンロードしてください。";
