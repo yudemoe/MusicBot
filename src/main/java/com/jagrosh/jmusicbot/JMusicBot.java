@@ -190,9 +190,9 @@ public class JMusicBot
         }
         catch(IllegalArgumentException ex)
         {
-                    + "invalid: " + ex + "\nConfig Location: " + config.getConfigLocation());
             prompt.alert(Prompt.Level.ERROR, "JMusicBot", "Some aspect of the configuration is "
-            System.exit(1);
+            + "invalid: " + ex + "\nConfig Location: " + config.getConfigLocation());
+    System.exit(1);
         }
     }
 }
