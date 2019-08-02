@@ -102,10 +102,10 @@ public class BotConfig
             // validate bot token
             if(token==null || token.isEmpty() || token.equalsIgnoreCase("BOT_TOKEN_HERE"))
             {
-                token = prompt.prompt("Please provide a bot token."
-                        + "\nInstructions for obtaining a token can be found here:"
+                token = prompt.prompt("Bot のトークンを記述してください。"
+                        + "\n詳しい設定方法については、次のページをご覧ください:"
                         + "\nhttps://github.com/jagrosh/MusicBot/wiki/Getting-a-Bot-Token."
-                        + "\nBot Token: ");
+                        + "\nBot のトークン: ");
                 if(token==null)
                 {
                     prompt.alert(Prompt.Level.WARNING, CONTEXT, "token が指定されていません！終了します...\n\nconfig ファイルの場所: " + path.toAbsolutePath().toString());
@@ -122,11 +122,11 @@ public class BotConfig
             {
                 try
                 {
-                    owner = Long.parseLong(prompt.prompt("Owner ID was missing, or the provided owner ID is not valid."
-                        + "\nPlease provide the User ID of the bot's owner."
-                        + "\nInstructions for obtaining your User ID can be found here:"
+                    owner = Long.parseLong(prompt.prompt("管理者のIDが未記入または間違っています。"
+                        + "\nBot の管理者のIDを指定してください。"
+                        + "\n詳しい設定方法については、次のページをご覧ください:"
                         + "\nhttps://github.com/jagrosh/MusicBot/wiki/Finding-Your-User-ID"
-                        + "\nOwner User ID: "));
+                        + "\n管理者のID: "));
                 }
                 catch(NumberFormatException | NullPointerException ex)
                 {
@@ -134,7 +134,7 @@ public class BotConfig
                 }
                 if(owner<=0)
                 {
-                    prompt.alert(Prompt.Level.ERROR, CONTEXT, "Invalid User ID! Exiting.\n\nConfig Location: " + path.toAbsolutePath().toString());
+                    prompt.alert(Prompt.Level.ERROR, CONTEXT, "不正なIDです。終了します。\n\n設定ファイルの場所: " + path.toAbsolutePath().toString());
                     System.exit(0);
                 }
                 else

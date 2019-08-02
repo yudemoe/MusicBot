@@ -63,8 +63,8 @@ public class JMusicBot
         for(String arg: args)
             if("-nogui".equalsIgnoreCase(arg))
             {
-                prompt.alert(Prompt.Level.WARNING, "GUI", "The -nogui flag has been deprecated. "
-                        + "Please use the -Dnogui=true flag before the name of the jar. Example: java -jar -Dnogui=true JMusicBot.jar");
+                prompt.alert(Prompt.Level.WARNING, "GUI", "-nogui オプションはもう使われません。  "
+                        + "-Dnogui=true を jarファイル を指定する前に記述してください。 例: java -jar -Dnogui=true JMusicBot.jar");
                 break;
             }
         
@@ -185,13 +185,13 @@ public class JMusicBot
         {
             prompt.alert(Prompt.Level.ERROR, "JMusicBot", ex + "\nPlease make sure you are "
                     + "editing the correct config.txt file, and that you have used the "
-                    + "correct token (not the 'secret'!)\nConfig Location: " + config.getConfigLocation());
+                    + "correct token (not the 'secret'!)\n設定ファイルの場所: " + config.getConfigLocation());
             System.exit(1);
         }
         catch(IllegalArgumentException ex)
         {
-            prompt.alert(Prompt.Level.ERROR, "JMusicBot", "Some aspect of the configuration is "
-            + "invalid: " + ex + "\nConfig Location: " + config.getConfigLocation());
+            prompt.alert(Prompt.Level.ERROR, "JMusicBot", "設定のいくつかが間違っています。 "
+            + "invalid: " + ex + "\n設定ファイルの場所: " + config.getConfigLocation());
     System.exit(1);
         }
     }

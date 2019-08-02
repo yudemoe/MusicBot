@@ -76,7 +76,7 @@ public class FormatUtil {
         for(int i=0; i<6 && i<list.size(); i++)
             out+="\n - "+list.get(i).getName()+" (ID:"+list.get(i).getId()+")";
         if(list.size()>6)
-            out+="\n**And "+(list.size()-6)+" more...**";
+            out+="\n**さらに "+(list.size()-6)+" 件...**";
         return out;
     }
     
@@ -86,7 +86,7 @@ public class FormatUtil {
         for(int i=0; i<6 && i<list.size(); i++)
             out+="\n - "+list.get(i).getName()+" (ID:"+list.get(i).getId()+")";
         if(list.size()>6)
-            out+="\n**And "+(list.size()-6)+" more...**";
+            out+="\n**さらに "+(list.size()-6)+" 件...**";
         return out;
     }
     
