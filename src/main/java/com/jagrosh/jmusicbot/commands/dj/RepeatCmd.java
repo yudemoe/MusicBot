@@ -32,6 +32,7 @@ public class RepeatCmd extends DJCommand
         this.name = "repeat";
         this.help = "キューが終了したときに、繰り返し再生します。";
         this.arguments = "[on|off]";
+        this.aliases = bot.getConfig().getAliases(this.name);
         this.guildOnly = true;
     }
     

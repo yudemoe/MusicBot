@@ -31,7 +31,7 @@ public class PlaylistsCmd extends MusicCommand
         super(bot);
         this.name = "playlists";
         this.help = "登録済みのプレイリストを表示します。";
-        this.aliases = new String[]{"pls"};
+        this.aliases = bot.getConfig().getAliases(this.name);
         this.guildOnly = true;
         this.beListening = false;
         this.beListening = false;

@@ -31,6 +31,7 @@ public class StopCmd extends DJCommand
         super(bot);
         this.name = "stop";
         this.help = "現在再生中の曲を停止し、キューをぶっ飛ばします。";
+        this.aliases = bot.getConfig().getAliases(this.name);
         this.bePlaying = false;
     }
 

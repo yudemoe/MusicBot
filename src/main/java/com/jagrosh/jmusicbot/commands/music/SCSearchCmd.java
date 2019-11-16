@@ -23,12 +23,12 @@ import com.jagrosh.jmusicbot.Bot;
  */
 public class SCSearchCmd extends SearchCmd 
 {
-    public SCSearchCmd(Bot bot, String searchingEmoji)
+    public SCSearchCmd(Bot bot)
     {
-        super(bot, searchingEmoji);
+        super(bot);
         this.searchPrefix = "scsearch:";
         this.name = "scsearch";
+        this.aliases = bot.getConfig().getAliases(this.name);
         this.help = "SoundCloud から曲を検索します。";
-        this.aliases = new String[]{};
     }
 }

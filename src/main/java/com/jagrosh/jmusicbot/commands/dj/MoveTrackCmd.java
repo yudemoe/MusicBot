@@ -20,7 +20,7 @@ public class MoveTrackCmd extends DJCommand
         this.name = "movetrack";
         this.help = "この曲のキュー内での順番を変更します。";
         this.arguments = "<from> <to>";
-        this.aliases = new String[]{"move"};
+        this.aliases = bot.getConfig().getAliases(this.name);
         this.bePlaying = true;
     }
 

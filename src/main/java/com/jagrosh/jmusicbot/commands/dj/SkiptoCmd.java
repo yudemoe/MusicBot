@@ -32,7 +32,7 @@ public class SkiptoCmd extends DJCommand
         this.name = "skipto";
         this.help = "指定された曲をスキップします。";
         this.arguments = "<position>";
-        this.aliases = new String[]{"jumpto"};
+        this.aliases = bot.getConfig().getAliases(this.name);
         this.bePlaying = true;
     }
 

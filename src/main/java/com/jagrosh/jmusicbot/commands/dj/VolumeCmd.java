@@ -32,8 +32,8 @@ public class VolumeCmd extends DJCommand
     {
         super(bot);
         this.name = "volume";
-        this.aliases = new String[]{"vol"};
         this.help = "音量を調節、確認します。";
+        this.aliases = bot.getConfig().getAliases(this.name);
         this.arguments = "[0-150]";
     }
 
