@@ -115,9 +115,9 @@ public class SearchCmd extends MusicCommand
                         }
                         AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
                         int pos = handler.addTrack(new QueuedTrack(track, event.getAuthor()))+1;
-                        event.replySuccess("**"+track.getInfo().title
-                                +"** (`"+FormatUtil.formatTime(track.getDuration())+"`) "+(pos==0 ? "をキューに追加しました。" 
-                                    : " 位置: "+pos));
+                        event.replySuccess("**" + FormatUtil.filter(track.getInfo().title)
+                                + "** を追加しました (`" + FormatUtil.formatTime(track.getDuration()) + "`) " + (pos==0 ? "すぐに再生されます。" 
+                                    : pos +"番目に再生されます。"));
                     })
                     .setCancel((msg) -> {})
                     .setUsers(event.getAuthor())

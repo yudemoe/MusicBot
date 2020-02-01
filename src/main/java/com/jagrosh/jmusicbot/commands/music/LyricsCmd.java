@@ -16,12 +16,10 @@
 package com.jagrosh.jmusicbot.commands.music;
 
 import com.jagrosh.jdautilities.command.CommandEvent;
-import com.jagrosh.jlyrics.Lyrics;
 import com.jagrosh.jlyrics.LyricsClient;
 import com.jagrosh.jmusicbot.Bot;
 import com.jagrosh.jmusicbot.audio.AudioHandler;
 import com.jagrosh.jmusicbot.commands.MusicCommand;
-import java.util.concurrent.ExecutionException;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 
@@ -57,7 +55,7 @@ public class LyricsCmd extends MusicCommand
         {
             if(lyrics == null)
             {
-                event.replyError("`" + title + "` の歌詞データは見つかりませんでした。");
+                event.replyError("`" + title + "` の歌詞は見つかりませんでした。" + (event.getArgs().isEmpty() ? "曲名を直接入力することができます (`lyrics [song name]`)" : ""));
                 return;
             }
 

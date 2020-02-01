@@ -40,7 +40,7 @@ public class DebugCmd extends OwnerCommand
     {
         this.bot = bot;
         this.name = "debug";
-        this.help = "shows debug info";
+        this.help = "デバッグ情報を表示します。";
         this.aliases = bot.getConfig().getAliases(this.name);
         this.guildOnly = false;
     }
@@ -49,38 +49,39 @@ public class DebugCmd extends OwnerCommand
     protected void execute(CommandEvent event)
     {
         StringBuilder sb = new StringBuilder();
-        sb.append("System Properties:");
+        sb.append("```\nシステム設定:");
         for(String key: PROPERTIES)
             sb.append("\n  ").append(key).append(" = ").append(System.getProperty(key));
-        sb.append("\n\nJMusicBot Information:")
-                .append("\n  Version = ").append(OtherUtil.getCurrentVersion())
-                .append("\n  Owner = ").append(bot.getConfig().getOwnerId())
-                .append("\n  Prefix = ").append(bot.getConfig().getPrefix())
-                .append("\n  AltPrefix = ").append(bot.getConfig().getAltPrefix())
-                .append("\n  MaxSeconds = ").append(bot.getConfig().getMaxSeconds())
-                .append("\n  NPImages = ").append(bot.getConfig().useNPImages())
-                .append("\n  SongInStatus = ").append(bot.getConfig().getSongInStatus())
-                .append("\n  StayInChannel = ").append(bot.getConfig().getStay())
-                .append("\n  UseEval = ").append(bot.getConfig().useEval())
-                .append("\n  UpdateAlerts = ").append(bot.getConfig().useUpdateAlerts());
-        sb.append("\n\nDependency Information:")
-                .append("\n  JDA Version = ").append(JDAInfo.VERSION)
-                .append("\n  JDA-Utilities Version = ").append(JDAUtilitiesInfo.VERSION)
-                .append("\n  Lavaplayer Version = ").append(PlayerLibrary.VERSION);
+        sb.append("\n\nwarotaの情報:")
+                .append("\n  バージョン = ").append(OtherUtil.getCurrentVersion())
+                .append("\n  管理者 = ").append(bot.getConfig().getOwnerId())
+                .append("\n  接頭辞 = ").append(bot.getConfig().getPrefix())
+                .append("\n  代替の接頭辞 = ").append(bot.getConfig().getAltPrefix())
+                .append("\n  最大の曲の長さ (秒数) = ").append(bot.getConfig().getMaxSeconds())
+                .append("\n  Now Playing の画像 = ").append(bot.getConfig().useNPImages())
+                .append("\n  再生中の曲をプレイ中に表示するか = ").append(bot.getConfig().getSongInStatus())
+                .append("\n  定住するチャンネル = ").append(bot.getConfig().getStay())
+                .append("\n  デバッグモード = ").append(bot.getConfig().useEval())
+                .append("\n  アップデートの通知 = ").append(bot.getConfig().useUpdateAlerts());
+        sb.append("\n\n依存パッケージの情報:")
+                .append("\n  JDA のバージョン = ").append(JDAInfo.VERSION)
+                .append("\n  JDA-Utilities のバージョン = ").append(JDAUtilitiesInfo.VERSION)
+                .append("\n  Lavaplayer のバージョン = ").append(PlayerLibrary.VERSION);
         long total = Runtime.getRuntime().totalMemory() / 1024 / 1024;
         long used = total - (Runtime.getRuntime().freeMemory() / 1024 / 1024);
-        sb.append("\n\nRuntime Information:")
-                .append("\n  Total Memory = ").append(total)
-                .append("\n  Used Memory = ").append(used);
-        sb.append("\n\nDiscord Information:")
+        sb.append("\n\nランタイムの情報:")
+                .append("\n  合計メモリ = ").append(total)
+                .append("\n  使用済みメモリ = ").append(used);
+        sb.append("\n\nDiscordの情報:")
                 .append("\n  ID = ").append(event.getJDA().getSelfUser().getId())
-                .append("\n  Guilds = ").append(event.getJDA().getGuildCache().size())
-                .append("\n  Users = ").append(event.getJDA().getUserCache().size());
+                .append("\n  サーバー = ").append(event.getJDA().getGuildCache().size())
+                .append("\n  ユーザー = ").append(event.getJDA().getUserCache().size());
+        sb.append("\n```");
         
         if(event.isFromType(ChannelType.PRIVATE) 
                 || event.getSelfMember().hasPermission(event.getTextChannel(), Permission.MESSAGE_ATTACH_FILES))
             event.getChannel().sendFile(sb.toString().getBytes(), "debug_information.txt").queue();
         else
-            event.reply("Debug Information: ```\n" + sb.toString() + "\n```");
+            event.reply("デバッグに関する情報: " + sb.toString());
     }
 }
