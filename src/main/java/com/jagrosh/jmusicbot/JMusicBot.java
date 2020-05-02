@@ -192,6 +192,7 @@ public class JMusicBot
         }
         catch(IllegalArgumentException ex)
         {
+
             prompt.alert(Prompt.Level.ERROR, "JMusicBot", "設定のいくつかが間違っています。 "
             + "invalid: " + ex + "\n設定ファイルの場所: " + config.getConfigLocation());
     System.exit(1);
