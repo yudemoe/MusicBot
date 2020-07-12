@@ -41,6 +41,6 @@ public class StopCmd extends DJCommand
         AudioHandler handler = (AudioHandler)event.getGuild().getAudioManager().getSendingHandler();
         handler.stopAndClear();
         event.getGuild().getAudioManager().closeAudioConnection();
-        event.reply(event.getClient().getSuccess()+" 再生は停止され、キューはすべてなくなりました。");
+        event.reply(event.getClient().getSuccess()+" 再生は停止され、キューは空になりました。");
     }
 }
