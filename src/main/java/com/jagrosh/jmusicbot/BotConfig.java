@@ -118,37 +118,20 @@ public class BotConfig {
                 } catch (NumberFormatException | NullPointerException ex) {
                     owner = 0;
                 }
-                if (owner <= 0) {
-                    prompt.alert(Prompt.Level.ERROR, CONTEXT,
-                            "不正なIDです。終了します。\n\n設定ファイルの場所: " + path.toAbsolutePath().toString());
-                    System.exit(0);
-                } else {
+                if(owner<=0)
+                {
+                    prompt.alert(Prompt.Level.ERROR, CONTEXT, "無効なユーザーIDです。終了します。\n\n設定ファイルの場所: " + path.toAbsolutePath().toString());
+                    return;
+                }
+                else
+                {
                     write = true;
                 }
             }
-
-            if (write) {
-                String original = OtherUtil.loadResource(this, "/reference.conf");
-                byte[] bytes;
-                if (original == null) {
-                    bytes = ("token = " + token + "\r\nowner = " + owner).getBytes();
-                } else {
-                    bytes = original
-                            .substring(original.indexOf(START_TOKEN) + START_TOKEN.length(),
-                                    original.indexOf(END_TOKEN))
-                            .replace("BOT_TOKEN_HERE", token).replace("0 // OWNER ID", Long.toString(owner)).trim()
-                            .getBytes();
-                }
-                try {
-                    Files.write(path, bytes);
-                } catch (IOException ex) {
-                    prompt.alert(Prompt.Level.WARNING, CONTEXT,
-                            "新しいオプションを config.txt に書き込めませんでした: " + ex
-                                    + "\nファイルの場所がボットによって書き込める権限設定になっていることを確認してください。\n\nconfig.txt の場所: "
-                                    + path.toAbsolutePath().toString());
-                }
-            }
-
+            
+            if(write)
+                writeToFile();
+            
             // if we get through the whole config, it's good to go
             valid = true;
         } catch (ConfigException ex) {
@@ -156,8 +139,36 @@ public class BotConfig {
                     ex + ": " + ex.getMessage() + "\n\nconfig.txt の場所: " + path.toAbsolutePath().toString());
         }
     }
-
-    public boolean isValid() {
+    
+    private void writeToFile()
+    {
+        String original = OtherUtil.loadResource(this, "/reference.conf");
+        byte[] bytes;
+        if(original==null)
+        {
+            bytes = ("token = "+token+"\r\nowner = "+owner).getBytes();
+        }
+        else
+        {
+            bytes = original.substring(original.indexOf(START_TOKEN)+START_TOKEN.length(), original.indexOf(END_TOKEN))
+                .replace("BOT_TOKEN_HERE", token)
+                .replace("0 // OWNER ID", Long.toString(owner))
+                .trim().getBytes();
+        }
+        try 
+        {
+            Files.write(path, bytes);
+        }
+        catch(IOException ex) 
+        {
+            prompt.alert(Prompt.Level.WARNING, CONTEXT, "新しい設定項目を設定ファイルに書き込めませんでした: "+ex
+                + "\nファイルの権限や保存場所を確認してください。\n\n設定ファイルの場所: " 
+                + path.toAbsolutePath().toString());
+        }
+    }
+    
+    public boolean isValid()
+    {
         return valid;
     }
 

@@ -39,7 +39,7 @@ public class PrefixCmd extends AdminCommand
     {
         if(event.getArgs().isEmpty())
         {
-            event.replyError("Ú“ª«‚ğŠÜ‚ß‚é‚©A NONE ‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B");
+            event.replyError("æ¥é ­è¾ã‚’å«ã‚ã‚‹ã‹ã€ NONE ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚");
             return;
         }
         
@@ -47,12 +47,12 @@ public class PrefixCmd extends AdminCommand
         if(event.getArgs().equalsIgnoreCase("none"))
         {
             s.setPrefix(null);
-            event.replySuccess("Ú“ª«‚ÍÁ‹‚³‚ê‚Ü‚µ‚½B");
+            event.replySuccess("æ¥é ­è¾ã¯æ¶ˆå»ã•ã‚Œã¾ã—ãŸã€‚");
         }
         else
         {
             s.setPrefix(event.getArgs());
-            event.replySuccess("Ú“ª«‚Í `" + event.getArgs() + "` ‚Éİ’è‚³‚ê‚Ü‚µ‚½ (*" + event.getGuild().getName() + "*)");
+            event.replySuccess("æ¥é ­è¾ã¯ `" + event.getArgs() + "` ã«è¨­å®šã•ã‚Œã¾ã—ãŸ (*" + event.getGuild().getName() + "*)");
         }
     }
 }
