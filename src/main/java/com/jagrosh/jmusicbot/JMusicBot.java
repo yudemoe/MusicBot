@@ -28,9 +28,12 @@ import com.jagrosh.jmusicbot.gui.GUI;
 import com.jagrosh.jmusicbot.settings.SettingsManager;
 import com.jagrosh.jmusicbot.utils.OtherUtil;
 import java.awt.Color;
+import java.util.Arrays;
 import javax.security.auth.login.LoginException;
-import net.dv8tion.jda.core.*;
-import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.api.*;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,13 +44,11 @@ import org.slf4j.LoggerFactory;
 public class JMusicBot {
     public final static String PLAY_EMOJI = "\u25B6"; // ▶
     public final static String PAUSE_EMOJI = "\u23F8"; // ⏸
-    public final static String STOP_EMOJI = "\u23F9"; // ⏹
-    public final static Permission[] RECOMMENDED_PERMS = new Permission[] { Permission.MESSAGE_READ,
-            Permission.MESSAGE_WRITE, Permission.MESSAGE_HISTORY, Permission.MESSAGE_ADD_REACTION,
-            Permission.MESSAGE_EMBED_LINKS, Permission.MESSAGE_ATTACH_FILES, Permission.MESSAGE_MANAGE,
-            Permission.MESSAGE_EXT_EMOJI, Permission.MANAGE_CHANNEL, Permission.VOICE_CONNECT, Permission.VOICE_SPEAK,
-            Permission.NICKNAME_CHANGE };
-
+    public final static String STOP_EMOJI  = "\u23F9"; // ⏹
+    public final static Permission[] RECOMMENDED_PERMS = {Permission.MESSAGE_READ, Permission.MESSAGE_WRITE, Permission.MESSAGE_HISTORY, Permission.MESSAGE_ADD_REACTION,
+                                Permission.MESSAGE_EMBED_LINKS, Permission.MESSAGE_ATTACH_FILES, Permission.MESSAGE_MANAGE, Permission.MESSAGE_EXT_EMOJI,
+                                Permission.MANAGE_CHANNEL, Permission.VOICE_CONNECT, Permission.VOICE_SPEAK, Permission.NICKNAME_CHANGE};
+    public final static GatewayIntent[] INTENTS = {GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES};
     /**
      * @param args the command line arguments
      */
@@ -62,7 +63,11 @@ public class JMusicBot {
         
         // get and check latest version
         String version = OtherUtil.checkVersion(prompt);
-
+        
+        // check for valid java version
+        if(!System.getProperty("java.vm.name").contains("64"))
+            prompt.alert(Prompt.Level.WARNING, "Java バージョン", "サポートされていないバージョンの Java を利用しているようです。64bit 版のものを利用してください。");
+        
         // load config
         BotConfig config = new BotConfig(prompt);
         config.load();
@@ -106,14 +111,18 @@ public class JMusicBot {
             cb.setStatus(config.getStatus());
         if (config.getGame() == null)
             cb.useDefaultGame();
-        else if (config.getGame().getName().equalsIgnoreCase("none")) {
-            cb.setGame(null);
+        else if(config.getGame().getName().equalsIgnoreCase("none"))
+        {
+            cb.setActivity(null);
             nogame = true;
-        } else
-            cb.setGame(config.getGame());
-
-        if (!prompt.isNoGUI()) {
-            try {
+        }
+        else
+            cb.setActivity(config.getGame());
+        
+        if(!prompt.isNoGUI())
+        {
+            try 
+            {
                 GUI gui = new GUI(bot);
                 bot.setGUI(gui);
                 gui.init();
@@ -126,21 +135,23 @@ public class JMusicBot {
         log.info("設定ファイルを読み込みました： " + config.getConfigLocation());
 
         // attempt to log in and start
-        try {
-            JDA jda = new JDABuilder(AccountType.BOT).setToken(config.getToken()).setAudioEnabled(true)
-                    .setGame(nogame ? null : Game.playing("起動中..."))
-                    .setStatus(
-                            config.getStatus() == OnlineStatus.INVISIBLE || config.getStatus() == OnlineStatus.OFFLINE
-                                    ? OnlineStatus.INVISIBLE
-                                    : OnlineStatus.DO_NOT_DISTURB)
-                    .addEventListener(cb.build(), waiter, new Listener(bot)).setBulkDeleteSplittingEnabled(true)
+        try
+        {
+            JDA jda = JDABuilder.create(config.getToken(), Arrays.asList(INTENTS))
+                    .enableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE)
+                    .disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.EMOTE)
+                    .setActivity(nogame ? null : Activity.playing("起動中..."))
+                    .setStatus(config.getStatus()==OnlineStatus.INVISIBLE || config.getStatus()==OnlineStatus.OFFLINE 
+                            ? OnlineStatus.INVISIBLE : OnlineStatus.DO_NOT_DISTURB)
+                    .addEventListeners(cb.build(), waiter, new Listener(bot))
+                    .setBulkDeleteSplittingEnabled(true)
                     .build();
             bot.setJDA(jda);
         } catch (LoginException ex) {
             prompt.alert(Prompt.Level.ERROR, "JMusicBot",
-                    ex + "\nPlease make sure you are "
-                            + "editing the correct config.txt file, and that you have used the "
-                            + "correct token (not the 'secret'!)\n設定ファイルの場所: " + config.getConfigLocation());
+                    ex + "\正しい config.txt を編集していることを確認し、正しいトークン（「シークレット」ではありません！）"
+                            + "を使用していることを確認してください。"
+                            + "設定ファイルの場所: " + config.getConfigLocation());
             System.exit(1);
         } catch (IllegalArgumentException ex) {
 
